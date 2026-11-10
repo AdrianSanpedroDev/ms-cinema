@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { ProjectorMapper } from '../../projectors/mappers/projector.mapper';
+import { SeatMapper } from '../../seats/mappers/seat.mapper';
 import { CreateTheaterDto } from '../dto/create-theater.dto';
 import { TheaterResponseDto } from '../dto/theater-response.dto';
 import { UpdateTheaterDto } from '../dto/update-theater.dto';
@@ -24,6 +26,12 @@ export class TheaterMapper {
       id: entity.id,
       location: entity.location,
       capacity: entity.capacity,
+      projector: entity.projector
+        ? ProjectorMapper.toResponseDto(entity.projector)
+        : undefined,
+      seats: entity.seats
+        ? SeatMapper.toResponseDtoList(entity.seats, entity.id)
+        : undefined,
     };
   }
 
